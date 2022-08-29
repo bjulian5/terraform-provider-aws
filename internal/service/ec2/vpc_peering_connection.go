@@ -352,13 +352,13 @@ func modifyVPCPeeringConnectionOptions(conn *ec2.EC2, d *schema.ResourceData, vp
 			return resource.NonRetryableError(err)
 		}
 
-		if v := vpcPeeringConnection.AccepterVpcInfo; v != nil && accepterPeeringConnectionOptions != nil {
+		if v := vpcPeeringConnection.AccepterVpcInfo; v != nil && v.PeeringOptions != nil && accepterPeeringConnectionOptions != nil {
 			if !vpcPeeringConnectionOptionsEqual(v.PeeringOptions, accepterPeeringConnectionOptions) {
 				return resource.RetryableError(errors.New("Accepter Options not stable"))
 			}
 		}
 
-		if v := vpcPeeringConnection.RequesterVpcInfo; v != nil && requesterPeeringConnectionOptions != nil {
+		if v := vpcPeeringConnection.RequesterVpcInfo; v != nil && v.PeeringOptions != nil && requesterPeeringConnectionOptions != nil {
 			if !vpcPeeringConnectionOptionsEqual(v.PeeringOptions, requesterPeeringConnectionOptions) {
 				return resource.RetryableError(errors.New("Requester Options not stable"))
 			}
